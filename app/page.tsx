@@ -22,7 +22,7 @@ function WeddingInvitationContent() {
   };
 
   return (
-    <div className="min-h-screen font-sans">
+    <div className={`min-h-screen font-sans ${isUnlocked ? '' : 'overflow-hidden'}`}>
       {/* Parallax Background */}
       <ParallaxBackground />
       

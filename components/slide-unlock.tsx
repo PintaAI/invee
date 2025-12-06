@@ -103,10 +103,10 @@ export default function SlideUnlock({ onUnlock, guestName, weddingDate }: SlideU
   }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd]);
 
   return (
-    <section className="w-full py-12 px-6 flex flex-col items-center justify-center relative overflow-hidden md:py-16 md:px-8">
+    <section className="w-full py-6 px-6 flex flex-col items-center justify-center relative overflow-hidden md:py-8 md:px-8">
       <div className="w-full max-w-lg flex flex-col items-center">
         {/* Section Title - Consistent with gallery and rsvp */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-4">
           <h2 className="text-3xl md:text-4xl font-serif text-primary mb-4">
             Wedding Invitation
           </h2>
@@ -114,7 +114,7 @@ export default function SlideUnlock({ onUnlock, guestName, weddingDate }: SlideU
         </div>
         
         {/* Picture frame */}
-        <div className="relative w-full max-w-xs mb-8">
+        <div className="relative w-full max-w-xs mb-6">
           <div className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-xl">
             <Image
               src="/gallery/IMG_0942.JPG"
@@ -139,7 +139,7 @@ export default function SlideUnlock({ onUnlock, guestName, weddingDate }: SlideU
         </div>
         
         {guestName && (
-          <div className="mb-8 px-4">
+          <div className="mb-6 px-4">
             <p className="text-lg md:text-xl text-muted-foreground text-center font-medium mb-1">
               Kepada Yth:
             </p>

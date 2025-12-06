@@ -58,6 +58,13 @@ export interface WeddingInfo {
       caption: string;
     }[];
   };
+  metadata: {
+    title: string;
+    description: string;
+    thumbnail: string;
+    siteName: string;
+    url: string;
+  };
 }
 
 export const weddingData: WeddingInfo = {
@@ -213,6 +220,13 @@ export const weddingData: WeddingInfo = {
         caption: "Bersama selamanya"
       }
     ]
+  },
+  metadata: {
+    title: "Nina & Rores - Undangan Pernikahan",
+    description: "Anda diundang untuk merayakan pernikahan Nina dan Rores. Bergabunglah bersama kami pada 14 Desember 2025 untuk hari istimewa kami.",
+    thumbnail: "/gallery/IMG_0899.JPG",
+    siteName: "Pernikahan Nina & Rores",
+    url: "https://nina-rores-wedding.vercel.app"
   }
 };
 
