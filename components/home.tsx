@@ -27,8 +27,10 @@ export default function Home({ guestName }: HomeProps) {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h1 className="text-5xl md:text-6xl font-serif text-primary mb-4 drop-shadow-lg" style={{ textShadow: '4px 4px 16px rgba(0,0,0,0.7)' }}>
-            {couple.partner1.name} & {couple.partner2.name}
+          <h1 className="text-3xl md:text-6xl font-serif text-primary mb-4 drop-shadow-lg flex flex-col gap-0 leading-tight" style={{ textShadow: '4px 4px 16px rgba(0,0,0,0.7)' }}>
+            <span>{couple.partner1.name}</span>
+            <span className="text-xl md:text-3xl leading-none">&</span>
+            <span>{couple.partner2.name}</span>
           </h1>
           <div className="h-1 w-20 bg-secondary mx-auto rounded-full" />
         </motion.div>
@@ -38,11 +40,11 @@ export default function Home({ guestName }: HomeProps) {
       <div className="bg-linear-to-t from-black via-black/80 to-transparent p-8">
         <div className="text-center text-white max-w-2xl mx-auto">
         {guestName && (
-          <p className="text-lg md:text-xl text-white/90 mb-2 drop-shadow-md">
+          <p className="text-base md:text-xl text-white/90 mb-2 drop-shadow-md">
             Kepada Yth: <span className="text-white font-medium">{guestName}</span>
           </p>
         )}
-        <p className="text-base md:text-lg text-white mb-6 drop-shadow-md font-medium tracking-widest uppercase">
+        <p className="text-sm md:text-lg text-white mb-6 drop-shadow-md font-medium tracking-widest uppercase">
           {new Date(weddingDate).toLocaleDateString('id-ID', {
             day: 'numeric',
             month: 'long',

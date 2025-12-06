@@ -101,11 +101,11 @@ export default function Story() {
             />
             <motion.div
               layoutId={`card-${selectedId}`}
-              className="relative w-full max-w-lg bg-background rounded-xl overflow-hidden shadow-2xl z-10"
+              className="relative w-full max-w-lg bg-background rounded-xl overflow-hidden shadow-2xl z-10 max-h-[85vh] flex flex-col"
             >
               <motion.div
                 layoutId={`image-${selectedId}`}
-                className="relative h-64 bg-cover"
+                className="relative h-64 shrink-0 bg-cover"
                 style={{
                   backgroundImage: `url(${selectedId === 'nina' ? couple.partner1.photo : couple.partner2.photo})`,
                   backgroundPosition: selectedId === 'nina' ? 'left 20%' : 'right 10%'
@@ -124,7 +124,7 @@ export default function Story() {
                   </svg>
                 </button>
               </motion.div>
-              <div className="p-6">
+              <div className="p-6 overflow-y-auto">
                 <motion.h3 layoutId={`name-${selectedId}`} className="text-2xl font-serif text-primary text-center mb-4">
                   {selectedId === 'nina' ? couple.partner1.name : couple.partner2.name}
                 </motion.h3>
