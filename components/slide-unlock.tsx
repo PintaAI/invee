@@ -103,29 +103,33 @@ export default function SlideUnlock({ onUnlock, guestName, weddingDate }: SlideU
   }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd]);
 
   return (
-    <section className="w-full py-6 px-6 flex flex-col items-center justify-center relative overflow-hidden md:py-8 md:px-8">
-      <div className="w-full max-w-lg flex flex-col items-center">
-        {/* Section Title - Consistent with gallery and rsvp */}
-        <div className="text-center mb-4">
-          <h2 className="text-3xl md:text-4xl font-serif text-primary mb-4">
+    <section className="w-full h-[100dvh] py-8 px-6 flex flex-col items-center justify-between relative overflow-hidden">
+      {/* Top: Title */}
+      <div className="w-full max-w-lg flex flex-col items-center pt-4 shrink-0">
+        <div className="text-center">
+          <h2 className="text-3xl md:text-4xl font-serif text-primary mb-2">
             Wedding Invitation
           </h2>
           <div className="h-1 w-20 bg-secondary mx-auto rounded-full" />
         </div>
+      </div>
         
-        {/* Picture frame */}
-        <div className="relative w-full max-w-xs mb-6">
-          <div className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-xl">
+      {/* Middle: Content (Image + Name) - Flexible */}
+      <div className="flex-1 w-full max-w-lg flex flex-col items-center justify-center min-h-0 gap-4 my-4">
+        {/* Picture frame - Constrained height */}
+        <div className="relative w-full max-w-[280px] aspect-[3/4] shrink-0 max-h-[40vh]">
+          <div className="relative w-full h-full rounded-lg overflow-hidden shadow-xl border-4 border-white/20">
             <Image
               src="/gallery/IMG_0942.JPG"
               alt="Wedding frame"
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 384px"
+              priority
             />
             {/* Wedding date overlay */}
             {weddingDate && (
-              <div className="absolute top-10 left-0 right-0 p-4">
+              <div className="absolute top-6 left-0 right-0 p-4">
                 <p className="text-black text-center font-serif text-lg font-bold drop-shadow-md">
                   {new Date(weddingDate).toLocaleDateString('id-ID', {
                     day: 'numeric',
@@ -139,19 +143,22 @@ export default function SlideUnlock({ onUnlock, guestName, weddingDate }: SlideU
         </div>
         
         {guestName && (
-          <div className="mb-6 px-4">
-            <p className="text-lg md:text-xl text-muted-foreground text-center font-medium mb-1">
+          <div className="px-4 shrink-0">
+            <p className="text-base md:text-lg text-muted-foreground text-center font-medium mb-0.5">
               Kepada Yth:
             </p>
-            <p className="text-2xl md:text-3xl text-primary font-serif font-bold text-center drop-shadow-lg">
+            <p className="text-xl md:text-2xl text-primary font-serif font-bold text-center drop-shadow-lg">
               {guestName}
             </p>
           </div>
         )}
+      </div>
 
+      {/* Bottom: Slider - Fixed */}
+      <div className="w-full max-w-lg flex flex-col items-center pb-8 shrink-0">
         <div
           ref={sliderRef}
-          className="relative w-full h-20 bg-white/20 backdrop-blur-md rounded-full border-2 border-white/30 select-none touch-none overflow-hidden"
+          className="relative w-full h-16 md:h-20 bg-white/20 backdrop-blur-md rounded-full border-2 border-white/30 select-none touch-none overflow-hidden"
         >
           {/* Background text */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
@@ -205,7 +212,7 @@ export default function SlideUnlock({ onUnlock, guestName, weddingDate }: SlideU
           </div>
         </div>
 
-        <p className="mt-4 text-white/15 text-sm text-center">
+        <p className="mt-4 text-white/40 text-sm text-center font-medium animate-pulse">
           Geser tombol ke kanan untuk membuka undangan
         </p>
       </div>

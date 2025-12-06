@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect } from "react";
 import Image from "next/image";
 import ParallaxBackground from "@/components/parallax-background";
 import SlideUnlock from "@/components/slide-unlock";
@@ -22,6 +22,17 @@ function WeddingInvitationContent() {
     setIsUnlocked(true);
   };
 
+  useEffect(() => {
+    if (isUnlocked) {
+      document.body.style.overflow = 'unset';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isUnlocked]);
+
   return (
     <div className={`min-h-screen font-sans ${isUnlocked ? '' : 'overflow-hidden'}`}>
       {/* Parallax Background */}
@@ -32,7 +43,7 @@ function WeddingInvitationContent() {
       
       <main className="w-full relative">
         {/* Lock Screen - Always absolute positioned */}
-        <section className={`fixed inset-0 z-50 min-h-screen flex flex-col items-center justify-start pt-20 transition-opacity duration-1000 ${isUnlocked ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        <section className={`fixed inset-0 z-50 min-h-screen flex flex-col items-center justify-center transition-opacity duration-1000 ${isUnlocked ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
           {/* Additional overlay for lock screen */}
           <div className="absolute inset-0">
             <Image
