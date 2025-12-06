@@ -150,7 +150,7 @@ export const weddingData: WeddingInfo = {
       {
         bankName: "Bank Rakyat Indonesia (BRI)",
         accountNumber: "5678901234",
-        accountName: "Siti Nurhaliza & Rizki Pratama"
+        accountName: "Rores"
       }
     ]
   },
