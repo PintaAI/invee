@@ -4,6 +4,7 @@ import { useState, Suspense } from "react";
 import Image from "next/image";
 import ParallaxBackground from "@/components/parallax-background";
 import SlideUnlock from "@/components/slide-unlock";
+import MusicPlayer from "@/components/music-player";
 import Home from "@/components/home";
 import Gallery from "@/components/gallery";
 import Event from "@/components/event";
@@ -26,9 +27,12 @@ function WeddingInvitationContent() {
       {/* Parallax Background */}
       <ParallaxBackground />
       
+      {/* Music Player - Always visible */}
+      <MusicPlayer />
+      
       <main className="w-full relative">
         {/* Lock Screen - Always absolute positioned */}
-        <section className={`fixed inset-0 z-50 min-h-screen flex flex-col items-center justify-center transition-opacity duration-1000 ${isUnlocked ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        <section className={`fixed inset-0 z-50 min-h-screen flex flex-col items-center justify-start pt-20 transition-opacity duration-1000 ${isUnlocked ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
           {/* Additional overlay for lock screen */}
           <div className="absolute inset-0">
             <Image
