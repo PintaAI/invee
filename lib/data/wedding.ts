@@ -74,7 +74,7 @@ export const weddingData: WeddingInfo = {
       title: "Mempelai Wanita",
       bio: "Siti adalah seorang desainer grafis yang bersemangat dengan cinta pada seni dan kreativitas. Ia menikmati melukis, mendaki gunung, dan menghabiskan waktu dengan anjing golden retriever-nya, Max.",
       photo: "/nina.JPG",
-      location: "Jakarta, Indonesia",
+      location: "Jakart, Indonesia",
       parents: {
         father: "Bapak Ahmad Wijaya",
         mother: "Ibu Ratna Sari"
