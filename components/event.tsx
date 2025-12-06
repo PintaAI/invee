@@ -1,223 +1,161 @@
-import { weddingData } from "@/lib/data/wedding";
+"use client";
 
-export default function Event() {
+import { getWeddingDate } from "@/lib/data/wedding";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { Calendar, Clock, MapPin, Map } from "lucide-react";
+import Countdown from "@/components/countdown";
+import { useWeddingData } from "@/lib/hooks/useWeddingData";
+
+interface EventProps {
+  side?: "bride" | "groom" | null;
+}
+
+interface EventData {
+  title?: string;
+  date: string;
+  time: string;
+  location: string;
+  address: string;
+  mapLink?: string;
+  dressCode?: string;
+}
+
+interface EventCardProps extends EventData {
+  title: string;
+}
+
+const EventCard = ({ title, date, time, location, address, mapLink, dressCode }: EventCardProps) => (
+    <Card className="bg-card/50 hover:bg-card border-muted/20 shadow-sm hover:shadow-md transition-all duration-300">
+      <CardContent className="p-6 flex flex-col h-full">
+        <h4 className="font-serif text-xl font-medium text-primary mb-5 text-center">{title}</h4>
+        
+        <div className="space-y-4 flex-grow">
+            <div className="flex items-start gap-3">
+                <Calendar className="w-5 h-5 text-primary/70 shrink-0 mt-0.5" />
+                <span className="text-foreground text-sm">{date}</span>
+            </div>
+            
+            <div className="flex items-start gap-3">
+                <Clock className="w-5 h-5 text-primary/70 shrink-0 mt-0.5" />
+                <span className="text-foreground text-sm">{time}</span>
+            </div>
+
+            <div className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-primary/70 shrink-0 mt-0.5" />
+                <div className="space-y-1">
+                    <p className="font-medium text-foreground text-sm leading-tight">{location}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{address}</p>
+                </div>
+            </div>
+            
+            {dressCode && (
+                <div className="text-sm text-muted-foreground mt-3 pt-3 border-t border-dashed border-muted">
+                    <span className="font-medium text-primary/80">Dress Code:</span> {dressCode}
+                </div>
+            )}
+        </div>
+
+        {mapLink && (
+            <div className="pt-6 mt-2">
+                <Button 
+                    asChild 
+                    className="w-full gap-2 shadow-sm" 
+                    variant="outline"
+                    size="default"
+                >
+                    <a href={mapLink} target="_blank" rel="noopener noreferrer">
+                        <Map className="w-4 h-4" />
+                        Lihat di Google Maps
+                    </a>
+                </Button>
+            </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+
+export default function Event({ side }: EventProps) {
+  const { data: weddingData, loading } = useWeddingData();
   const { brideEvents, groomEvents } = weddingData;
+  
+  // Determine which events to show based on the side parameter
+  const showBrideEvents = !side || side === "bride";
+  const showGroomEvents = !side || side === "groom";
+
+  if (loading) {
+    return (
+      <section className="w-full max-w-5xl mx-auto px-4 py-8">
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <div className="flex flex-col p-6 bg-card">
-      <h2 className="text-xl font-bold text-center mb-6 text-foreground">
-        Acara Pernikahan
-      </h2>
-      
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-lg font-semibold mb-3 text-primary text-center">
-            Acara Mempelai Wanita
-          </h3>
-          
-          <div className="space-y-4">
-            <div className="bg-accent p-4 rounded-lg">
-              <h4 className="font-medium text-foreground">{brideEvents.akad.title}</h4>
-              <p className="text-sm text-muted-foreground mt-1">
-                {brideEvents.akad.date} | {brideEvents.akad.time}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {brideEvents.akad.location}
-              </p>
-              <p className="text-xs text-muted-foreground mt-2">
-                {brideEvents.akad.address}
-              </p>
-              {brideEvents.akad.mapLink && (
-                <a
-                  href={brideEvents.akad.mapLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-xs text-primary mt-2 hover:underline"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-3 w-3 mr-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  Lihat di Peta
-                </a>
-              )}
-              {brideEvents.akad.dressCode && (
-                <p className="text-xs text-primary mt-2">
-                  Dress Code: {brideEvents.akad.dressCode}
-                </p>
-              )}
-            </div>
-            
-            <div className="bg-accent p-4 rounded-lg">
-              <h4 className="font-medium text-foreground">{brideEvents.resepsi.title}</h4>
-              <p className="text-sm text-muted-foreground mt-1">
-                {brideEvents.resepsi.date} | {brideEvents.resepsi.time}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {brideEvents.resepsi.location}
-              </p>
-              <p className="text-xs text-muted-foreground mt-2">
-                {brideEvents.resepsi.address}
-              </p>
-              {brideEvents.resepsi.mapLink && (
-                <a
-                  href={brideEvents.resepsi.mapLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-xs text-primary mt-2 hover:underline"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-3 w-3 mr-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  Lihat di Peta
-                </a>
-              )}
-              {brideEvents.resepsi.dressCode && (
-                <p className="text-xs text-primary mt-2">
-                  Dress Code: {brideEvents.resepsi.dressCode}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
+    <section className="w-full max-w-5xl mx-auto px-4 py-8">
+        <CardHeader className="px-0">
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false }}
+                transition={{ duration: 0.8 }}
+                className="text-center mb-8"
+            >
+                <CardTitle className="text-3xl md:text-4xl font-serif text-primary mb-4">Acara Pernikahan</CardTitle>
+                <div className="h-1 w-20 bg-secondary mx-auto rounded-full" />
+            </motion.div>
+        </CardHeader>
         
-        <div>
-          <h3 className="text-lg font-semibold mb-3 text-primary text-center">
-            Acara Mempelai Pria
-          </h3>
-          
-          <div className="space-y-4">
-            <div className="bg-accent p-4 rounded-lg">
-              <h4 className="font-medium text-foreground">{groomEvents.unduhMantu.title}</h4>
-              <p className="text-sm text-muted-foreground mt-1">
-                {groomEvents.unduhMantu.date} | {groomEvents.unduhMantu.time}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {groomEvents.unduhMantu.location}
-              </p>
-              <p className="text-xs text-muted-foreground mt-2">
-                {groomEvents.unduhMantu.address}
-              </p>
-              {groomEvents.unduhMantu.mapLink && (
-                <a
-                  href={groomEvents.unduhMantu.mapLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-xs text-primary mt-2 hover:underline"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-3 w-3 mr-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  Lihat di Peta
-                </a>
-              )}
-              {groomEvents.unduhMantu.dressCode && (
-                <p className="text-xs text-primary mt-2">
-                  Dress Code: {groomEvents.unduhMantu.dressCode}
-                </p>
-              )}
-            </div>
-            
-            <div className="bg-accent p-4 rounded-lg">
-              <h4 className="font-medium text-foreground">{groomEvents.pengajian.title}</h4>
-              <p className="text-sm text-muted-foreground mt-1">
-                {groomEvents.pengajian.date} | {groomEvents.pengajian.time}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {groomEvents.pengajian.location}
-              </p>
-              <p className="text-xs text-muted-foreground mt-2">
-                {groomEvents.pengajian.address}
-              </p>
-              {groomEvents.pengajian.mapLink && (
-                <a
-                  href={groomEvents.pengajian.mapLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center text-xs text-primary mt-2 hover:underline"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-3 w-3 mr-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  Lihat di Peta
-                </a>
-              )}
-              {groomEvents.pengajian.dressCode && (
-                <p className="text-xs text-primary mt-2">
-                  Dress Code: {groomEvents.pengajian.dressCode}
-                </p>
-              )}
-            </div>
-          </div>
+        <div className="mb-12">
+            <Countdown targetDate={getWeddingDate(weddingData, side ?? null)} variant="dark" />
         </div>
-      </div>
-    </div>
+
+        <div className="space-y-12">
+            {showBrideEvents && (
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="space-y-6"
+            >
+                <h3 className="text-xl md:text-2xl font-serif text-primary text-center mb-6 flex items-center justify-center gap-4">
+                    <span className="h-px w-8 bg-primary/30"></span>
+                    Acara Mempelai Wanita
+                    <span className="h-px w-8 bg-primary/30"></span>
+                </h3>
+            
+                <div className="grid md:grid-cols-2 gap-6">
+                    <EventCard {...brideEvents.akad} title={brideEvents.akad.title || "Akad Nikah"} />
+                    <EventCard {...brideEvents.resepsi} title={brideEvents.resepsi.title || "Resepsi Pernikahan"} />
+                </div>
+            </motion.div>
+            )}
+            
+            {showGroomEvents && (
+             <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="space-y-6"
+            >
+                <h3 className="text-xl md:text-2xl font-serif text-primary text-center mb-6 flex items-center justify-center gap-4">
+                    <span className="h-px w-8 bg-primary/30"></span>
+                    Acara Mempelai Pria
+                    <span className="h-px w-8 bg-primary/30"></span>
+                </h3>
+            
+                <div className="grid md:grid-cols-2 gap-6">
+                    <EventCard {...groomEvents.unduhMantu} title={groomEvents.unduhMantu.title || "Unduh Mantu"} />
+                    <EventCard {...groomEvents.pengajian} title={groomEvents.pengajian.title || "Pengajian"} />
+                </div>
+            </motion.div>
+            )}
+        </div>
+    </section>
   );
 }

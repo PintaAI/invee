@@ -63,10 +63,10 @@ export interface WeddingInfo {
 export const weddingData: WeddingInfo = {
   couple: {
     partner1: {
-      name: "Siti Nurhaliza",
+      name: "Nina",
       title: "Mempelai Wanita",
       bio: "Siti adalah seorang desainer grafis yang bersemangat dengan cinta pada seni dan kreativitas. Ia menikmati melukis, mendaki gunung, dan menghabiskan waktu dengan anjing golden retriever-nya, Max.",
-      photo: "/images/bride.jpg",
+      photo: "/nina.JPG",
       location: "Jakarta, Indonesia",
       parents: {
         father: "Bapak Ahmad Wijaya",
@@ -74,10 +74,10 @@ export const weddingData: WeddingInfo = {
       }
     },
     partner2: {
-      name: "Rizki Pratama",
+      name: "Rores",
       title: "Mempelai Pria",
       bio: "Rizki adalah seorang insinyur perangkat lunak yang mencintai teknologi dan petualangan outdoor. Ketika tidak coding, Anda dapat menemukannya bersepeda atau mencoba resep baru di dapur.",
-      photo: "/images/groom.jpg",
+      photo: "/rores.png",
       location: "Bandung, Indonesia",
       parents: {
         father: "Bapak Budi Santoso",
@@ -90,7 +90,7 @@ export const weddingData: WeddingInfo = {
     akad: {
       id: "akad",
       title: "Akad Nikah",
-      date: "2024-06-15",
+      date: "2025-12-14",
       time: "09:00",
       location: "Masjid Al-Hikmah",
       address: "Jl. Masjid No. 45, Jakarta Selatan, DKI Jakarta 12345",
@@ -101,7 +101,7 @@ export const weddingData: WeddingInfo = {
     resepsi: {
       id: "resepsi-bride",
       title: "Resepsi Pernikahan",
-      date: "2024-06-15",
+      date: "2025-12-14",
       time: "13:00",
       location: "Taman Sunset",
       address: "Jl. Garden No. 123, Jakarta Selatan, DKI Jakarta 12345",
@@ -214,4 +214,27 @@ export const weddingData: WeddingInfo = {
       }
     ]
   }
+};
+
+export const getWeddingDate = (data: WeddingInfo, side: "bride" | "groom" | null) => {
+  let events: Event[] = [];
+
+  if (side === "bride") {
+    events = [data.brideEvents.akad, data.brideEvents.resepsi];
+  } else if (side === "groom") {
+    events = [data.groomEvents.unduhMantu, data.groomEvents.pengajian];
+  } else {
+    events = [
+      data.brideEvents.akad,
+      data.brideEvents.resepsi,
+      data.groomEvents.unduhMantu,
+      data.groomEvents.pengajian
+    ];
+  }
+
+  const sortedDates = events
+    .map((e) => e.date)
+    .sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
+
+  return sortedDates[0];
 };
